@@ -13,3 +13,7 @@ models:
     description: "Olivers Store Dimension"
   - name: fact_sales
     description: "Olivers Sales Fact"
+  - name: stg_employee_certifications
+    description: "Staging model for employee certifications. One record per employee per certification per awarded date."
+  - name: fact_certification
+    description: "Employee certification fact. One certification per employee on a specific date."
