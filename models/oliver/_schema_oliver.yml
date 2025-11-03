@@ -9,11 +9,41 @@ models:
     description: "Olivers Employee Dimension"
   - name: oliver_dim_product
     description: "Olivers Product Dimension"
+    columns:
+      - name: product_key
+        tests: 
+          - unique
   - name: oliver_dim_store
     description: "Olivers Store Dimension"
   - name: fact_sales
     description: "Olivers Sales Fact"
+    columns:
+      - name: product_key
+        description: "A foreign key to the oliver_dim_product dimension"
+        tests:
+          - not_null
   - name: stg_employee_certifications
-    description: "Staging model for employee certifications. One record per employee per certification per awarded date."
+    description: "Staging model for employee certifications. One record per employee per certification."
+    columns:
+      - name: certification_name
+        description: "Name of the employee certification"
+        tests:
+          - accepted_values:
+              values:
+                - 'Product Knowledge Level 2'
+                - 'Point of Sale Operations'
+                - 'Conflict Resolution'
+                - 'Leadership and Coaching'
+                - 'Inventory Management'
+                - 'Cash Handling and Security'
+                - 'Strategic Retail Operations'
+                - 'Customer Service Excellence'
+                - 'Workplace Safety'
   - name: fact_certification
     description: "Employee certification fact. One certification per employee on a specific date."
+    columns: 
+      - name: employee_key
+        tests:
+          - relationships:
+              to: ref('oliver_dim_employee')
+              field: employee_key
